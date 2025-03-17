@@ -67,21 +67,35 @@ class TestCandidateElimination(unittest.TestCase):
         self.assertEqual(result, [])
     
     def test_get_minimal_specializations(self):
-        # Note: There's a bug in your implementation - fix before running tests
-        # This is how the test would look after fixing:
+        # Define unique values for each attribute
+        unique_values = [
+            ['sunny', 'rainy'],     # For attribute 0
+            ['warm', 'cold'],       # For attribute 1
+            ['normal', 'high']      # For attribute 2
+        ]
         
-        # Test with general hypothesis that matches example - no specialization needed
-        result = get_minimal_specializations(['?', '?', '?'], ['sunny', 'warm', 'normal'])
-        # This should keep the hypothesis general
+        # Test 1: Completely general hypothesis ['?', '?', '?']
+        # With x = ['sunny', 'warm', 'normal']
+        # Expected specializations:
+        #   attribute 0: replace '?' with 'rainy' -> ['rainy', '?', '?']
+        #   attribute 1: replace '?' with 'cold'   -> ['?', 'cold', '?']
+        #   attribute 2: replace '?' with 'high'    -> ['?', '?', 'high']
+        result = get_minimal_specializations(['?', '?', '?'], ['sunny', 'warm', 'normal'], unique_values)
+        self.assertEqual(len(result), 3)
+        self.assertIn(['rainy', '?', '?'], result)
+        self.assertIn(['?', 'cold', '?'], result)
+        self.assertIn(['?', '?', 'high'], result)
         
-        # Test with contradiction (negative example matching general hypothesis)
-        result = get_minimal_specializations(['?', 'warm', '?'], ['sunny', 'warm', 'high'])
-        # Should produce specialized hypotheses that exclude this example
+        # Test 2: Hypothesis with a mix of specified and general values
+        # For h = ['sunny', 'warm', '?'] and x = ['sunny', 'warm', 'high'],
+        # index 2 should produce a specialization replacing '?' with 'normal' only.
+        result = get_minimal_specializations(['sunny', 'warm', '?'], ['sunny', 'warm', 'high'], unique_values)
+        self.assertEqual(result, [['sunny', 'warm', 'normal']])
         
-        # Length mismatch
-        result = get_minimal_specializations(['sunny', 'warm'], ['sunny', 'warm', 'normal'])
+        # Test 3: Length mismatch should return an empty list
+        result = get_minimal_specializations(['sunny', 'warm'], ['sunny', 'warm', 'normal'], unique_values)
         self.assertEqual(result, [])
-
+    
     def test_load_data(self):
         # Create a simple test CSV file
         test_df = pd.DataFrame({
