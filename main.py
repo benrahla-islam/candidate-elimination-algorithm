@@ -23,23 +23,39 @@ def is_consistent(h, x):
 def is_more_general(h1, h2):
     if len(h1) != len(h2):
         return False
-    return all(h1[i] == h2[i] or h1[i] == '?'  for i in range(len(h1)))
-
+    moreGeneral = False
+    for i in range(len(h1)):
+        if h1[i] == '?':
+            if h2[i] == '?':
+                pass
+            else:
+                moreGeneral = True
+        else:
+            if h1[i] != h2[i] :
+                if h2[i] != None:
+                    return False
+                else:
+                    moreGeneral = True
+    if moreGeneral:
+        return True
+    else:
+        return False
+    
 
 def get_minimal_generalizations(h, x):
     if len(h) != len(x):
         return []
     if h==[None]*len(h):
         return [x]
-    list_of_generalizations = []
+    generalization = h[:]
     for i in range(len(h)):
         if h[i] == '?':
-            pass
-        elif h[i] == None:
-            list_of_generalizations.append(h[:i] + [x[i]] + h[i+1:])
+            generalization[i] = h[i]
+        elif h[i] is None:
+            generalization[i] = x[i]
         elif h[i] != x[i] :
-            list_of_generalizations.append(h[:i] + ['?'] + h[i+1:])
-    return list_of_generalizations
+            generalization[i] = '?'
+    return generalization
 
 
 
@@ -128,4 +144,13 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    S = [
+        ['Sunny', 'Hot', 'High', 'Weak'],  # Most specific hypothesis
+        ['Sunny', '?', 'High', '?'],       # More general
+        ['?', '?', '?', '?']               # Most general
+    ]
+
+    reduced_S = remove_more_general(S)
+    print("Reduced S:")
+    for s in reduced_S:
+        print(s)
