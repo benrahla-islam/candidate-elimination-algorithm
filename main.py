@@ -2,6 +2,9 @@ import pandas as pd
 
 def load_data(data_path):
     """
+    # data must be in the form of a CSV file
+    # data must have the last column as the target column
+    # target column must have values 'Yes' or 'No'
     Loads data from a CSV file, extracts unique values from each column,
     and initializes the S0 and G0 hypotheses.
 
