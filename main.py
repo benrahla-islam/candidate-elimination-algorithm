@@ -180,9 +180,10 @@ def trait_negative_hypothesis(row, S, G, unique_values):
         if is_consistent(g, row):
             G.remove(g)
             for specialization in get_minimal_specializations(g, row, unique_values):
-                if not is_consistent(specialization, row):
+                if (not is_consistent(specialization, row) and 
+                    any(is_consistent(specialization, s) or is_more_general(specialization, s) for s in S)):
                     G.append(specialization)
-            G[:] = remove_less_general(G)
+    G[:] = remove_less_general(G)
 
 
 def trait_row(row, S, G, unique_values):
