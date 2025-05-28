@@ -1,58 +1,51 @@
 # Candidate Elimination Algorithm Tool
 
-A professional GUI application for the Candidate Elimination Algorithm, designed to process CSV data and visualize machine learning results.
+A GUI implementation of the Candidate Elimination Algorithm for processing CSV datasets and visualizing learning hypothesis evolution.
 
-## Features
+## Core Features
 
-- **Professional GUI Interface**: Clean, tabbed interface built with tkinter
-- **CSV File Import**: Easy file selection with drag-and-drop support
-- **Flexible Configuration**: Customizable positive/negative class indicators
-- **Data Preview**: Interactive table showing your CSV data
-- **Results Display**: Formatted output showing Final S and Final G hypotheses
-- **History Management**: Keep track of all processing sessions
-- **Export Results**: Save results to text files for later reference
+- **Tkinter GUI**: Professional tabbed interface with data preview
+- **Flexible CSV Processing**: Configurable positive/negative class indicators
+- **Algorithm Visualization**: Real-time display of Final S and Final G hypotheses
+- **Session Management**: History tracking and result export
 
-## System Requirements
+## Technical Requirements
 
-- Windows 7/8/10/11 (64-bit)
-- Python 3.7 or later
-- Minimum 4GB RAM
-- 100MB free disk space
+- Python 3.7+
+- Dependencies: `pandas`, `tkinter`
+- Target column must be last column in CSV
+- Binary classification format (customizable labels)
 
 ## Quick Start
 
-1. **Launch the Application**: Double-click the desktop icon or use the Start Menu
-2. **Load Data**: Click "Browse CSV File" and select your data file
-3. **Configure Settings**: Set your positive/negative indicators (default: Yes/No)
-4. **Process**: Click "🚀 Process Data" to run the algorithm
-5. **View Results**: See the Final S and Final G hypotheses in the Results tab
+```bash
+python app.py
+```
+
+1. Load CSV file via GUI
+2. Configure class indicators (default: "Yes"/"No")
+3. Process data to get Final S/G hypotheses
+4. Export results or view history
 
 ## Data Format
 
-Your CSV file should:
-- Have headers in the first row
-- Include all feature columns followed by the target column (last column)
-- Use consistent values for positive/negative cases (e.g., "Yes"/"No", "True"/"False")
+CSV structure:
 
-## Sample Data
+```
+feature1,feature2,...,featureN,target
+value1,value2,...,valueN,Yes/No
+```
 
-The application includes sample CSV files in the `sample_data` folder:
-- `data.csv` - Basic example dataset
-- `driving_behavior.csv` - Driving behavior classification
-- `test_data.csv` - Additional test data
+- Last column = target variable
+- Binary classification labels (configurable)
+- Headers required
 
-## Troubleshooting
+## Architecture
 
-**Python Not Found**: Ensure Python 3.7+ is installed and added to your system PATH.
+- `main.py`: Core Candidate Elimination algorithm implementation
+- `app.py`: GUI wrapper with result management
+- `results/`: Output directory for processed results and history
 
-**Missing Dependencies**: The application will automatically install required packages (pandas, tkinter).
+## Sample Data Included
 
-**CSV Import Issues**: Verify your CSV file has proper formatting and encoding (UTF-8 recommended).
-
-## Version History
-
-- **v1.0.0** - Initial release with full GUI functionality
-
-## Support
-
-For issues or questions, please check the documentation or contact support.
+- `data.csv`, `driving_behavior.csv`, `test_data.csv`
